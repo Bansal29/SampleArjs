@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Location-Based AR</title>
+    <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/AR-js-org/AR.js/aframe/build/aframe-ar-location.js"></script>
+    <style>
+      body {
+        margin: 0;
+        overflow: hidden;
+      }
+      #container {
+        width: 100vw;
+        height: 100vh;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="container">
+      <!-- AR Scene Setup -->
+      <a-scene
+        embedded
+        arjs="trackingMethod: best; sourceType: webcam; locationEnabled: true; debugUIEnabled: false;"
+      >
+        <!-- Entity positioned based on GPS coordinates -->
+        <a-entity id="ar-entity" gps-entity-place="latitude: 0; longitude: 0">
+          <a-box position="0 0 0" material="color: blue;"></a-box>
+        </a-entity>
+
+        <!-- Camera entity -->
+        <a-entity camera></a-entity>
+      </a-scene>
+    </div>
+
+    <script>
+      // Function to handle geolocation success
+      function onSuccess(position) {
+        const latitude = position.coords.latitude;
+        const longitude = position.coords.longitude;
+
+        // Calculate the new coordinates (for demonstration, we'll move 5 meters north)
+        const offset = 0.000045; // Roughly equivalent to 5 meters for latitude
+        const newLatitude = latitude + offset;
+        const newLongitude = longitude;
+
+        console.log(`Current Latitude: ${latitude}`);
+        console.log(`Current Longitude: ${longitude}`);
+        console.log(`New Latitude: ${newLatitude}`);
+        console.log(`New Longitude: ${newLongitude}`);
+
+        // Update AR entity coordinates
+        const arEntity = document.getElementById("ar-entity");
+        arEntity.setAttribute(
+          "gps-entity-place",
+          `latitude: ${newLatitude}; longitude: ${newLongitude}`
+        );
+      }
+
+      // Function to handle geolocation errors
+      function onError(error) {
+        console.error("Error getting location:", error);
+      }
+
+      // Function to handle geolocation permission request
+      function requestLocationPermission() {
+        if (navigator.geolocation) {
+          navigator.geolocation.getCurrentPosition(onSuccess, onError);
+        } else {
+          console.error("Geolocation is not supported by this browser.");
+        }
+      }
+
+      // Request location permissions when the page loads
+      window.addEventListener("load", requestLocationPermission);
+    </script>
+  </body>
+</html>

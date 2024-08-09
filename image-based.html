@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Image-Based AR with AR.js</title>
+    <script src="https://cdn.jsdelivr.net/gh/aframevr/aframe@1.2.0/dist/aframe.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/AR-js-org/AR.js/aframe/build/aframe-ar-nft.js"></script>
+    <style>
+      body {
+        margin: 0;
+      }
+      #container {
+        width: 100vw;
+        height: 100vh;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="container">
+      <!-- Minimal loader shown until image descriptors are loaded -->
+      <div class="arjs-loader">
+        <div>Loading, please wait...</div>
+      </div>
+      <a-scene
+        vr-mode-ui="enabled: false;"
+        renderer="logarithmicDepthBuffer: true;"
+        embedded
+        arjs="trackingMethod: best; sourceType: webcam; debugUIEnabled: false;"
+      >
+        <a-nft
+          type="nft"
+          url="https://cdn.jsdelivr.net/gh/AR-js-org/AR.js/aframe/examples/image-tracking/nft/trex/trex-image/trex"
+          smooth="true"
+          smoothCount="10"
+          smoothTolerance=".01"
+          smoothThreshold="5"
+        >
+          <a-entity
+            gltf-model="https://cdn.jsdelivr.net/gh/AR-js-org/AR.js/aframe/examples/image-tracking/nft/trex/scene.gltf"
+            scale="5 5 5"
+            position="0 0 0"
+          ></a-entity>
+        </a-nft>
+        <a-entity camera></a-entity>
+      </a-scene>
+    </div>
+  </body>
+</html>
