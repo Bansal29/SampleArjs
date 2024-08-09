@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Location-Based AR</title>
     <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/gh/AR-js-org/AR.js/aframe/build/aframe-ar-location.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/AR-js-org/AR.js/aframe/build/aframe-ar.js"></script>
     <style>
       body {
         margin: 0;
@@ -22,7 +22,7 @@
       <!-- AR Scene Setup -->
       <a-scene
         embedded
-        arjs="trackingMethod: best; sourceType: webcam; locationEnabled: true; debugUIEnabled: false;"
+        arjs="sourceType: webcam; locationEnabled: true; debugUIEnabled: true;"
       >
         <!-- Entity positioned based on GPS coordinates -->
         <a-entity id="ar-entity" gps-entity-place="latitude: 0; longitude: 0">
